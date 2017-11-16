@@ -1,10 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <limits.h>
-#include <stdbool.h>
 int run=1;
-
 int menu_root() {
 	int val;
 	printf("\n");
@@ -20,62 +17,48 @@ int menu_root() {
 	scanf("%d", &val);
 	return val;
 }
-
-double ohms_lag(double r, double i){
-    double u = i * r;
-    return u;
+double multi(double x, double y){
+    return x*y;
 }
 
 double res_tot(double r1, double r2, double r3){
-    double rtot= (1/r1) + (1/r2) + (1/r3);
-    rtot= 1/rtot;
-    return rtot;
+    return 1/((1/r1) + (1/r2) + (1/r3));
 }
 
-double eff_enk(double u, double i){
-    double p = u * i;
-    return p;
-}
-
-double sken_eff(double u, double i){
-    double s = u * i;
-    return s;
-}
 
 double aktiv_eff(double u, double i, double cos){
-    double p = u * i * cos;
-    return p;
+    return u * i * cos;
 }
 
 double sken_3fas(double u, double i){
-    double s = u * i * sqrt(3);
-    return s;
+    return u * i * sqrt(3);
 }
 
 double aktiv_3fas(double u, double i, double cos){
-    double p = u * i * sqrt(3) * cos;
-    return p;
+    return u * i * sqrt(3) * cos;
 }
+double print_scan(char text[300]) {
+	double num=0;
+	printf("%s", text);
+	scanf("%lf", &num);
+	return num;
+}
+
+
 
 void (*menupicker)();
 void menu_1() {
 	printf("Ohms lag spänningen(volt/V) betäckning U lika med Resistansen(Ohm) betäckning R \n");
 	printf("g�nger Str�mmen(Ampere) med betäckningen I. Kort U=R*I. \n\n");
-	double r=0, i=0;
-	printf("Skriv resistans R < 20 000ohm: \n ");
-	scanf("%lf", &r);
-
+	double r=print_scan("Skriv resistans R < 20 000ohm:\n");
 	while(r>20000 || r==0) {
-		printf("f\x94r högt v\x84rde, f\x94rsök igen: \n");
-		scanf("%lf", &r);
+		r=print_scan("f\x94r högt v\x84rde, f\x94rsök igen: \n");
 	}
-	printf("Skriv str�m I < 440 Ampere: \n");
-	scanf("%lf", &i);
+	double i=print_scan("Skriv ström I < 440 Ampere: \n");
 	while(i > 440) {
-			printf("f\x94r högt v\x84rde, f\x94rsök igen: \n");
-			scanf("%lf", &i);
+		i=print_scan("f\x94r högt v\x84rde, f\x94rsök igen: \n");
 	}
-	printf("%f V\n", ohms_lag(r, i));
+	printf("%f V\n", multi(r, i));
 }
 
 void menu_2() {
@@ -103,28 +86,26 @@ void menu_2() {
 		{
 				printf("f\x94r högt v�rde, f\x94rsök igen: \n");
 				scanf("%lf", &r3);
-
 		}
 		printf("%f Ohm\n", res_tot(r1, r2, r3));
 }
 
 void menu_3() {
-	            printf("Effektlagen enkel f\x94r likström är effekten P i Watt (W) lika med spänningen U i volt(V)\n");
-	            printf("g�nger str�mmen I i Ampere(A): \n\n");
-	            double u, i;
-	            printf("Skriv spännngen U i volt(V): \n ");
-	            scanf("%lf", &u);
-	            printf("Skriv str�m Ampere I < 440A: \n");
-	            scanf("%lf", &i);
-	            while(i > 440)
-	            {
-	                printf("f\x94r högt v�rde, f\x94rsök igen: \n");
- 								scanf("%lf", &i);
-	            }
-	            printf("%f W\n", eff_enk(u, i));
+	printf("Effektlagen enkel f\x94r likström är effekten P i Watt (W) lika med spänningen U i volt(V)\n");
+	printf("g�nger str�mmen I i Ampere(A): \n\n");
+	double u, i;
+	printf("Skriv spännngen U i volt(V): \n ");
+	scanf("%lf", &u);
+	printf("Skriv str�m Ampere I < 440A: \n");
+	scanf("%lf", &i);
+	while(i > 440)
+	{
+		printf("f\x94r högt v�rde, f\x94rsök igen: \n");
+		scanf("%lf", &i);
+	}
+	printf("%f W\n", multi(u, i));
 }
 void menu_4() {
-
 	            printf("Skenbar effekt enfas r�knas med storheten VA(VoltAmpere) som �r lika med spänningen U i volt(V)\n");
 	            printf("g�nger str�mmen I i ampere(A)\n\n");
 	            double u, i;
@@ -137,7 +118,7 @@ void menu_4() {
 	                printf("f\x94r högt v�rde, f\x94rsök igen: \n");
 									scanf("%lf", &i);
 	            }
-	            printf("%f VA\n", sken_eff(u, i));
+	            printf("%f VA\n", multi(u, i));
 }
 void menu_5() {
 	printf("Aktiv medelefdekt enfas �r lika med effekt P i watt(W) lika med spänningen U i volt(V) g�nger str�mmen I \n");
@@ -153,8 +134,7 @@ void menu_5() {
 	}
 	printf("Skriv in effektfaktorn cos > 0 && cos < 1:\n");
 	scanf("%lf", &cos);
-	while (cos < 0 && cos > 1)
-	{
+	while (cos < 0 && cos > 1) {
 			printf("Fel v�rde, f\x94rsök igen\n");
 			scanf("%lf", &cos);
 	}
@@ -167,16 +147,13 @@ void menu_6() {
 				double u, i;
 				printf("Skriv spänning U i volt(V) < 400V: \n ");
 				scanf("%lf", &u);
-				while(u > 400)
-				{
+				while(u > 400) {
 						printf("f\x94r högt v�rde, f\x94rsök igen: \n");
 						scanf("%lf", &u);
 				}
-
 				printf("Skriv str�m I i ampere < 440: \n");
 				scanf("%lf", &i);
-				while(i > 440)
-				{
+				while(i > 440) {
 						printf("f\x94r högt v�rde, f\x94rsök igen: \n");
 						scanf("%lf", &i);
 				}
@@ -189,22 +166,19 @@ void menu_7() {
 	            double u, i, cos;
 	            printf("Skriv spänningen U i volt(V): \n ");
 	            scanf("%lf", &u);
-	            while(u > 400)
-	            {
+	            while(u > 400) {
 	                printf("f\x94r högt v�rde, f\x94rsök igen.\n");
 	                scanf("%lf", &u);
 	            }
 	            printf("Skriv str�m I i ampere(A): \n");
 	            scanf("%lf", &i);
-	            while(i > 440)
-	            {
+	            while(i > 440) {
 	                printf("f\x94r högt v�rde, f\x94rsök igen.\n");
 	                 scanf("%lf", &i);
 	            }
 	            printf("Skriv in effektfaktorn cos > 0 && cos < 1: \n");
 	            scanf("%lf", &cos);
-	            while (cos < 0 && cos > 1)
-	            {
+	            while (cos < 0 && cos > 1) {
 	                printf("f\x94r högt v�rde, f\x94rsök igen: \n");
 	                scanf("%lf", &cos);
 	            }
