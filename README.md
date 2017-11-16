@@ -20,3 +20,20 @@
 - void menu_0();
 - int menu_root();
 - double print_scan(char text[300]);
+
+# Makefile
+TARGET = main (setting the name for the file)
+LIBS = -lm (lm is the math library)
+CC = gcc (what to compile with)
+CFLAGS = -g -Wall (wall command will enable compiler warnings)
+
+OBJECTS = $(patsubst %.c, %.o, $(wildcard *.c))
+HEADERS = $(wildcard *.h)
+
+%.o: %.c $(HEADERS)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+.PRECIOUS: $(TARGET) $(OBJECTS)
+
+$(TARGET): $(OBJECTS)
+	$(CC) $(OBJECTS) -Wall $(LIBS) -o $@
