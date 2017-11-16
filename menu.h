@@ -1,0 +1,10 @@
+void (*menupicker)();
+void menu_1();
+void menu_2();
+void menu_3();
+void menu_4();
+void menu_5();
+void menu_6();
+void menu_7();
+void menu_0();
+int run=1;
