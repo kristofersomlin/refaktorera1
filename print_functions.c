@@ -2,7 +2,7 @@
 int menu_root() {
 	int val;
 	printf("\n");
-	printf("V\x84lj vilka storheter du vill ber�kna:\n");
+	printf("V\x84lj vilka storheter du vill ber\x84kna:\n");
 	printf("V\x84lj 1 f\x94r: OHMS LAG\n");
 	printf("V\x84lj 2 f\x94r: Rtot\n");
 	printf("V\x84lj 3 f\x94r: EFFEKTLAGEN ENKEL\n");
@@ -14,6 +14,7 @@ int menu_root() {
 	scanf("%d", &val);
 	return val;
 }
+
 double print_scan(char text[300]) {
 	double num;
 	printf("%s", text);
