@@ -1,6 +1,6 @@
-# Functions
-multi:
-- needs 2 doubles for input and will return x*y
+# Files
+- main.c : Just the main() loop with a function-pointer with the help of an array of void pointers
+- calc.c : All the different calculations
+- print_functions.c : All the functions to print text, both the menu and the input for menu
 
-res:
-- needs 3 doubles for input
+# Functions
