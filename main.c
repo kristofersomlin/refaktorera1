@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "menu.h"
-
+//gcc -o main main.c menu.c calc.c print_functions.c
 int main() {
 	system("cls");
 	while (run)	{
