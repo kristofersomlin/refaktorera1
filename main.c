@@ -3,8 +3,7 @@
 #include <math.h>
 #include <limits.h>
 #include <stdbool.h>
-
-
+int run=1;
 
 int menu_root() {
 	int val;
@@ -23,59 +22,42 @@ int menu_root() {
 }
 
 double ohms_lag(double r, double i){
-
     double u = i * r;
-
     return u;
 }
 
 double res_tot(double r1, double r2, double r3){
-
-
     double rtot= (1/r1) + (1/r2) + (1/r3);
     rtot= 1/rtot;
-
     return rtot;
 }
 
 double eff_enk(double u, double i){
-
     double p = u * i;
-
     return p;
 }
 
 double sken_eff(double u, double i){
-
     double s = u * i;
-
     return s;
-
 }
 
 double aktiv_eff(double u, double i, double cos){
-
     double p = u * i * cos;
-
     return p;
-
 }
 
 double sken_3fas(double u, double i){
-
     double s = u * i * sqrt(3);
-
     return s;
 }
 
 double aktiv_3fas(double u, double i, double cos){
-
     double p = u * i * sqrt(3) * cos;
-
     return p;
 }
 
-
+void (*menupicker)();
 void menu_1() {
 	printf("Ohms lag spänningen(volt/V) betäckning U lika med Resistansen(Ohm) betäckning R \n");
 	printf("g�nger Str�mmen(Ampere) med betäckningen I. Kort U=R*I. \n\n");
@@ -87,19 +69,13 @@ void menu_1() {
 		printf("f\x94r högt v\x84rde, f\x94rsök igen: \n");
 		scanf("%lf", &r);
 	}
-
-
-
 	printf("Skriv str�m I < 440 Ampere: \n");
 	scanf("%lf", &i);
 	while(i > 440) {
 			printf("f\x94r högt v\x84rde, f\x94rsök igen: \n");
 			scanf("%lf", &i);
 	}
-
 	printf("%f V\n", ohms_lag(r, i));
-
-
 }
 
 void menu_2() {
@@ -112,7 +88,6 @@ void menu_2() {
 		{
 				printf("f\x94r högt v\x84rde, f\x94rsök igen: \n");
 				scanf("%lf", &r1);
-
 		}
 		printf("Skriv resistans R2 < 20 000ohm: \n");
 		scanf("%lf", &r2);
@@ -132,7 +107,6 @@ void menu_2() {
 		}
 		printf("%f Ohm\n", res_tot(r1, r2, r3));
 }
-
 
 void menu_3() {
 	            printf("Effektlagen enkel f\x94r likström är effekten P i Watt (W) lika med spänningen U i volt(V)\n");
@@ -227,7 +201,6 @@ void menu_7() {
 	                printf("f\x94r högt v�rde, f\x94rsök igen.\n");
 	                 scanf("%lf", &i);
 	            }
-
 	            printf("Skriv in effektfaktorn cos > 0 && cos < 1: \n");
 	            scanf("%lf", &cos);
 	            while (cos < 0 && cos > 1)
@@ -235,50 +208,22 @@ void menu_7() {
 	                printf("f\x94r högt v�rde, f\x94rsök igen: \n");
 	                scanf("%lf", &cos);
 	            }
-
 	            printf("%f W\n", aktiv_3fas(u ,i, cos));
 }
-int main()
-{
-
+void menu_0() {
+	run=0;
+}
+int main() {
 	system("cls");
-	while (1)	{
-		int val;
-		val=menu_root();
-		if(val == 1)			{
-			menu_1();
+	while (run)	{
+		int val=menu_root();
+		void *menu_list[8]={menu_0,menu_1,menu_2,menu_3,menu_4,menu_5,menu_6,menu_7};
+		while(val>7 || val<0){
+			printf("error, fel meny!\n\n");
+			val=menu_root();
 		}
-		else if(val == 2) {
-			menu_2();
-		}
-		else if(val == 3)	{
-			menu_3();
-		}
-		else if(val == 4)	{
-			menu_4();
-    }
-
-    else if(val == 5)
-    {
-      menu_5();
-    }
-    else if(val == 6)
-    {
-			menu_6();
-        }
-        else if(val == 7)
-        {
-menu_7();
-        }
-        else if (val == 0)
-        {
-            return 0;
-        }
-        else
-        {
-            printf("Fel alternativ f\x94rsök igen!: \n");
-        }
-    }
-
-    return 0;
+		menupicker=menu_list[val];
+		menupicker();
+	}
+  return 0;
 }
