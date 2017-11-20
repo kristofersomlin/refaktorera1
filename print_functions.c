@@ -10,7 +10,8 @@ int menu_root() {
 	printf("V\x84lj 5 f\x94r: AKTIV EFFEKT/MEDELEFFEKT ENFAS\n");
 	printf("V\x84lj 6 f\x94r: SKENBAR EFFEKT 3-FAS\n");
 	printf("V\x84lj 7 f\x94r: AKTIV EFFEKT 3-FAS\n");
-	printf("V\x84lj 0 f\x94r: ATT AVSLUTA\n");
+	printf("V\x84lj 8 f\x94r: EL-PRIS\n");
+		printf("V\x84lj 0 f\x94r: ATT AVSLUTA\n");
 	scanf("%d", &val);
 	return val;
 }

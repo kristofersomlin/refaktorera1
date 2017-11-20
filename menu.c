@@ -100,6 +100,13 @@ void menu_7() {
 							}
 	            printf("%f W\n", aktiv_3fas(u ,i, cos));
 }
+
+void menu_8() {
+	            printf("R\x84knar ut kostnaden f\x94r din elf\x94rbrukning\n");
+							double x = print_scan("Skriv hur mycket KW du f\x94rbrukat: \n");
+	            double y = print_scan("Skriv in kostnaden för 1 kw: \n");
+							printf("%f SEK\n", multi(x, y));
+}
 void menu_0() {
 	run=0;
 }
